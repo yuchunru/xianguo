@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-12-7 18:09:26 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.xianguo.pojo.OrdersProduct" table="orders_product" catalog="xianguo">
+        <composite-id name="id" class="com.xianguo.pojo.OrdersProductId">
+            <key-property name="oid" type="java.lang.Long">
+                <column name="oid" />
+            </key-property>
+            <key-property name="pid" type="java.lang.Long">
+                <column name="pid" />
+            </key-property>
+            <key-property name="opnumber" type="java.lang.Long">
+                <column name="opnumber" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="product" class="com.xianguo.pojo.Product" update="false" insert="false" fetch="join">
+            <column name="pid" />
+        </many-to-one>
+        <many-to-one name="orders" class="com.xianguo.pojo.Orders" update="false" lazy="false" insert="false" fetch="join">
+            <column name="oid" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

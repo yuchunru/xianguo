@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-12-7 18:09:26 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.xianguo.pojo.Seller" table="seller" catalog="xianguo">
+        <id name="sid" type="java.lang.Long">
+            <column name="sid" />
+            <generator class="identity" />
+        </id>
+        <property name="susername" type="string">
+            <column name="susername" length="40" />
+        </property>
+        <property name="spwd" type="string">
+            <column name="spwd" length="40" />
+        </property>
+        <property name="spwdProtection" type="string">
+            <column name="spwd_protection" length="40" />
+        </property>
+        <property name="spwdAnswer" type="string">
+            <column name="spwd_answer" length="40" />
+        </property>
+        <property name="sshopName" type="string">
+            <column name="sshop_name" length="40" />
+        </property>
+        <property name="sphone" type="string">
+            <column name="sphone" length="40" />
+        </property>
+        <property name="smail" type="string">
+            <column name="smail" length="40" />
+        </property>
+        <property name="saddress" type="string">
+            <column name="saddress" length="40" />
+        </property>
+        <property name="sregistrationDate" type="date">
+            <column name="sregistration_date" length="10" />
+        </property>
+        <property name="sinUse" type="java.lang.Long">
+            <column name="sin_use" />
+        </property>
+        <set name="products" table="product" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="sid" not-null="true" />
+            </key>
+            <one-to-many class="com.xianguo.pojo.Product" />
+        </set>
+    </class>
+</hibernate-mapping>

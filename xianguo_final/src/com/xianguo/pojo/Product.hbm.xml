@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-12-7 18:09:26 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.xianguo.pojo.Product" table="product" catalog="xianguo">
+        <id name="pid" type="java.lang.Long">
+            <column name="pid" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="seller" class="com.xianguo.pojo.Seller" fetch="select">
+            <column name="sid" not-null="true" />
+        </many-to-one>
+        <property name="pname" type="string">
+            <column name="pname" length="40" />
+        </property>
+        <property name="pcategory" type="string">
+            <column name="pcategory" length="40" />
+        </property>
+        <property name="pdescription" type="string">
+            <column name="pdescription" length="40" />
+        </property>
+        <property name="ppicLocation" type="string">
+            <column name="ppic_location" length="80" />
+        </property>
+        <property name="ptotalNumber" type="java.lang.Long">
+            <column name="ptotal_number" />
+        </property>
+        <property name="pnumber" type="java.lang.Long">
+            <column name="pnumber" />
+        </property>
+        <property name="pcostPrice" type="java.lang.Double">
+            <column name="pcost_price" precision="10" />
+        </property>
+        <property name="psellingPrice" type="java.lang.Double">
+            <column name="pselling_price" precision="10" />
+        </property>
+        <property name="pproducePlace" type="string">
+            <column name="pproduce_place" length="40" />
+        </property>
+        <property name="pupDate" type="date">
+            <column name="pup_date" length="10" />
+        </property>
+        <property name="pinUp" type="java.lang.Long">
+            <column name="pin_up" />
+        </property>
+        <set name="ordersProducts" table="orders_product" inverse="true" lazy="false" fetch="select">
+            <key>
+                <column name="pid" />
+            </key>
+            <one-to-many class="com.xianguo.pojo.OrdersProduct" />
+        </set>
+    </class>
+</hibernate-mapping>

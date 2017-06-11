@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.1.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+           http://www.springframework.org/schema/tx 
+     	   http://www.springframework.org/schema/tx/spring-tx-3.1.xsd"
+	default-lazy-init="false" default-autowire="no">
+	<bean id="dataSource" destroy-method="close"
+		class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<!-- <property name="driverClassName" value="com.mysql.jdbc.Driver"> </property> -->
+		<property name="driverClass" value="com.mysql.jdbc.Driver" />
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/xianguo"></property>
+		<property name="user" value="root"></property>
+		<property name="password" value="root"></property>
+	</bean>
+
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLDialect
+				</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+			</props>
+		</property>
+		<property name="mappingResources">
+			<list>
+
+				<value>com/xianguo/pojo/Customer.hbm.xml</value>
+				<value>com/xianguo/pojo/Orders.hbm.xml</value>
+				<value>com/xianguo/pojo/OrdersProduct.hbm.xml</value>
+				<value>com/xianguo/pojo/Product.hbm.xml</value>
+				<value>com/xianguo/pojo/Seller.hbm.xml</value>
+				<value>com/xianguo/pojo/User.hbm.xml</value>
+
+
+			</list>
+		</property>
+	</bean>
+
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<!-- 关于分页 -->
+	<bean id="pageUtil" class="com.xianguo.util.PageUtil"></bean>
+	<!-- 关于user的bean -->
+	<bean id="user" class="com.xianguo.pojo.User" />
+
+	<bean id="userDaoImpl" class="com.xianguo.daoImpl.UserDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+		
+	</bean>
+
+	<bean id="userServiceImpl" class="com.xianguo.serviceImpl.UserServiceImpl">
+		<property name="userDaoImpl" ref="userDaoImpl" />
+	</bean>
+
+
+	<!-- 关于product的bean -->
+	<bean id="product" class="com.xianguo.pojo.Product" />
+
+	<bean id="productDaoImpl" class="com.xianguo.daoImpl.ProductDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+	<bean id="productServiceImpl" class="com.xianguo.serviceImpl.ProductServiceImpl">
+		<property name="productDaoImpl" ref="productDaoImpl" />
+	</bean>
+
+	<bean id="productAction" class="com.xianguo.action.ProductAction">
+		<property name="pageUtil" ref="pageUtil" />
+		<property name="productServiceImpl" ref="productServiceImpl" />
+	</bean>
+	
+	
+	<!-- 关于customer的Bean -->
+	<bean id="customer" class="com.xianguo.pojo.Customer"></bean>
+	<bean id="customerDaoImpl" class="com.xianguo.daoImpl.CustomerDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+	<bean id="customerServiceImpl" class="com.xianguo.serviceImpl.CustomerServiceImpl">
+		<property name="customerDaoImpl" ref="customerDaoImpl" />
+	</bean>
+	<bean id="customerAction" class="com.xianguo.action.CustomerAction">
+		<property name="customer" ref="customer"/>
+		<property name="customerServiceImpl" ref="customerServiceImpl" />
+	</bean>
+	
+	
+	<!--  -->
+	<bean id="ordersDaoImpl" class="com.xianguo.daoImpl.OrdersDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+	
+	<bean id="ordersServiceImpl" class="com.xianguo.serviceImpl.OrdersServiceImpl">
+		<property name="ordersDaoImpl" ref="ordersDaoImpl" />
+	</bean>
+	<bean id="ordersAction" class="com.xianguo.action.OrdersAction">
+		<property name="ordersServiceImpl" ref="ordersServiceImpl" />
+		<property name="customerServiceImpl" ref="customerServiceImpl" />
+	</bean>
+	
+	
+	<bean id="userAction" class="com.xianguo.action.UserAction">
+		<property name="user" ref="user" />
+		<property name="userServiceImpl" ref="userServiceImpl" />
+		<property name="productServiceImpl" ref="productServiceImpl" />
+	</bean>
+
+</beans>

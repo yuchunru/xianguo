@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+
+	<package name="user" extends="struts-default" namespace="/">
+	  	<action name="userAction" class="userAction">
+	  	   <!--  <result name="success">success.jsp</result> -->
+	  	   <result name="login">/updateProduct.jsp</result>
+	  	    
+	  	</action>
+	</package>
+	
+	<package name="product" extends="struts-default" namespace="/">
+	  	<action name="productAction" class="productAction">
+	  	    <result name="success">index.jsp</result>
+	  		<result name="showCategory">/visitor/showCategory.jsp</result>
+	  		<result name="showProductInfo">/customer/showProductInfo.jsp</result>
+	  		   
+	  	</action>
+		  
+	</package>
+	
+	<package name="customer" extends="struts-default" namespace="/">
+		<action name="customerAction" class="customerAction">
+			<result name="login" type="redirect">productAction!showProductByPage?action=initial&amp;pageType=first</result>
+			<result name="register">/visitor/login.jsp</result>
+			<result name="showUserInfo">/customer/showUserInfo.jsp</result>
+			<result name="updateUserInfo">/customer/showUserInfo.jsp</result>
+			
+		</action>
+	</package>
+	
+	<package name="orders" extends="struts-default" namespace="/">
+	  	<action name="ordersAction" class="ordersAction">
+	  	    <result name="subOrders">test.jsp</result>
+	  	    <result name="showOrders">/success.jsp</result>
+	  	</action>
+	</package>
+	
+</struts>

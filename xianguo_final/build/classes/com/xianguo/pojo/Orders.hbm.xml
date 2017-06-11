@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-12-7 18:09:26 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.xianguo.pojo.Orders" table="orders" catalog="xianguo">
+        <id name="oid" type="java.lang.Long">
+            <column name="oid" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="customer" class="com.xianguo.pojo.Customer" fetch="select">
+            <column name="cid" not-null="true" />
+        </many-to-one>
+        <property name="ocontact" type="string">
+            <column name="ocontact" length="40" />
+        </property>
+        <property name="ophone" type="string">
+            <column name="ophone" length="40" />
+        </property>
+        <property name="oaddress" type="string">
+            <column name="oaddress" length="80" />
+        </property>
+        <property name="opay" type="string">
+            <column name="opay" length="40" />
+        </property>
+        <property name="ocreateDate" type="date">
+            <column name="ocreate_date" length="10" />
+        </property>
+        <property name="ostatus" type="java.lang.Long">
+            <column name="ostatus" />
+        </property>
+        <set name="ordersProducts" table="orders_product" inverse="true" lazy="false" fetch="join">
+            <key>
+                <column name="oid" />
+            </key>
+            <one-to-many class="com.xianguo.pojo.OrdersProduct" />
+        </set>
+    </class>
+</hibernate-mapping>

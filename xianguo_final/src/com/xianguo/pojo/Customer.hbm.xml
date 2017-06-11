@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-12-7 18:09:26 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.xianguo.pojo.Customer" table="customer" catalog="xianguo">
+        <id name="cid" type="java.lang.Long">
+            <column name="cid" />
+            <generator class="identity" />
+        </id>
+        <property name="cusername" type="string">
+            <column name="cusername" length="40" />
+        </property>
+        <property name="cpwd" type="string">
+            <column name="cpwd" length="40" />
+        </property>
+        <property name="cpwdProtection" type="string">
+            <column name="cpwd_protection" length="40" />
+        </property>
+        <property name="cpwdAnswer" type="string">
+            <column name="cpwd_answer" length="40" />
+        </property>
+        <property name="cname" type="string">
+            <column name="cname" length="40" />
+        </property>
+        <property name="csex" type="string">
+            <column name="csex" length="40" />
+        </property>
+        <property name="cbirthday" type="date">
+            <column name="cbirthday" length="10" />
+        </property>
+        <property name="cphone" type="string">
+            <column name="cphone" length="40" />
+        </property>
+        <property name="cmail" type="string">
+            <column name="cmail" length="40" />
+        </property>
+        <property name="caddress" type="string">
+            <column name="caddress" length="40" />
+        </property>
+        <property name="cregistrationDate" type="date">
+            <column name="cregistration_date" length="10" />
+        </property>
+        <property name="cinUse" type="java.lang.Long">
+            <column name="cin_use" />
+        </property>
+        <set name="orderses" table="orders" inverse="true" lazy="false" fetch="select">
+            <key>
+                <column name="cid" not-null="true" />
+            </key>
+            <one-to-many class="com.xianguo.pojo.Orders" />
+        </set>
+    </class>
+</hibernate-mapping>
